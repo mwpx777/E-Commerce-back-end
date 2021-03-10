@@ -23,7 +23,7 @@ Product.init(
     },
     price: {
       // decimal, no null values, validates value is decimal
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(4,2),
       allowNull: false,
       validate: {
         isDecimal: true
@@ -53,6 +53,7 @@ Product.init(
     freezeTableName: true,
     underscored: true,
     modelName: 'product',
+    
   }
 );
 

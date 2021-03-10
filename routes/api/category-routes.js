@@ -10,25 +10,12 @@ router.get('/', (req, res) => {
     attributes: [
       'id',
       'category_name',
-
-      // from product data
-      'product_name',
-      'price',
-      'stock',
-      // 'category_id',
-
-      // from tag
-      'tag_name'
     ],
     include: [
       {
         model: Product,
-        attributes: [ 'product_name', 'price', 'stock'],
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
       },
-      {
-        model: Tag,
-        attributes: ['tag_name']
-      }
     ]
   })
     .then(dbCategoryData => res.json(dbCategoryData))
@@ -48,25 +35,12 @@ router.get('/:id', (req, res) => {
     attributes: [
       'id',
       'category_name',
-
-      // from product data
-      'product_name',
-      'price',
-      'stock',
-      // 'category_id',
-
-      // from tag
-      'tag_name'
     ],
     include: [
       {
         model: Product,
-        attributes: [ 'product_name', 'price', 'stock'],
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
       },
-      {
-        model: Tag,
-        attributes: ['tag_name']
-      }
     ]
 
   })
@@ -86,7 +60,7 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   // create a new category
   Category.create({
-    catagory_name: req.body.category_name
+    category_name: req.body.category_name
   })
     .then(dbCategoryData => res.json(dbCategoryData))
     .catch(err => {
@@ -119,7 +93,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
 
-  Category.destroy(req.body, {
+  Category.destroy( {
     where: {
       id: req.params.id
     }

@@ -12,29 +12,27 @@ router.get('/', (req, res) => {
     attributes: [
       'id',
       'product_name',
+      'price',
+      'stock',
+      'category_id',
 
-      // from catagory data
-      'category_name',
-
-      // from tag data
-      'tag_name'
     ],
     include: [
       {
         model: Category,
-        attributes: ['category_name'],
+        attributes: ['id', 'category_name'],
       },
       {
         model: Tag,
-        attributes: ['tag_name']
-      }
+        attributes: ['id', 'tag_name']
+      },
     ]
   })
-    .then(dbProductData => res.json(dbProductData)
-      .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-      }))
+    .then(dbProductData => res.json(dbProductData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    })
 });
 
 // get one product
@@ -48,23 +46,22 @@ router.get('/:id', (req, res) => {
     attributes: [
       'id',
       'product_name',
+      'price',
+      'stock',
+      'category_id',
 
-      // from catagory data
-      'category_name',
-
-      // from tag data
-      'tag_name'
     ],
     include: [
       {
-        model: Catagory,
-        attributes: ['category_name'],
+        model: Category,
+        attributes: ['id', 'category_name'],
       },
       {
         model: Tag,
-        attributes: ['tag_name']
-      }
+        attributes: ['id', 'tag_name']
+      },
     ]
+    
   })
     .then(dbProductData => {
       if (!dbProductData) {
@@ -89,7 +86,7 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
-  // Product.create(req.body){
+  
   Product.create(req.body, {
     product_name: req.body.product_name,
     price: req.body.price,
@@ -122,15 +119,15 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   // update product data
   Product.update(req.body, {
-    product_name: req.body.product_name,
-    price: req.body.price,
-    stock: req.body.stock,
-    tagIds: req.body.tagIds
-  },
-    {
+  //   product_name: req.body.product_name,
+  //   price: req.body.price,
+  //   stock: req.body.stock,
+  //   tagIds: req.body.tagIds
+  // },
+  //   {
       where: {
         id: req.params.id,
-      },
+      }
     })
     .then((product) => {
       // find all associated tags from ProductTag
@@ -168,7 +165,8 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
-  Product.destroy(req.body, {
+  // Product.destroy(req.body, {
+  Product.destroy({
     where: {
       id: req.params.id
     }

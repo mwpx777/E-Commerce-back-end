@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Tag, Product, ProductTag } = require('../../models');
+const { Tag, Product, ProductTag, Category } = require('../../models');
 
 // The `/api/tags` endpoint
 
@@ -10,25 +10,17 @@ router.get('/', (req, res) => {
     attributes: [
       'id',
       'tag_name',
-
-      // from product data
-      'product_name',
-      'price',
-      'stock',
-      'category_id',
-
-      // from category data
-      'category_name'
     ],
     include: [
+      // {
+      //   model: Category,
+      //   attributes: ['category_name']
+      // },
       {
         model: Product,
-        attributes: ['product_name', 'price', 'stock', 'category_id']
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       },
-      {
-        model: Category,
-        attributes: ['category_name']
-      }
+
     ]
   })
 
@@ -49,26 +41,16 @@ router.get('/:id', (req, res) => {
     attributes: [
       'id',
       'tag_name',
-
-      // from product data
-      'product_name',
-      'price',
-      'stock',
-      'category_id',
-
-      // from category data
-      'category_name'
     ],
     include: [
+
       {
         model: Product,
-        attributes: ['product_name', 'price', 'stock', 'category_id']
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       },
-      {
-        model: Category,
-        attributes: ['category_name']
-      }
+
     ]
+
   })
     .then(dbTagData => {
       if (!dbTagData) {
@@ -116,7 +98,7 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
-  Tag.destroy(req.body, {
+  Tag.destroy({
     where: {
       id: req.params.id
     }
