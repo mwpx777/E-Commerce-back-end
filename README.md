@@ -9,7 +9,7 @@
 
 * [Screenshot](#screenshot)
 
-* [Installation](#installation)
+
 
 * [Features](#features)
 
