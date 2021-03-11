@@ -12,15 +12,10 @@ router.get('/', (req, res) => {
       'tag_name',
     ],
     include: [
-      // {
-      //   model: Category,
-      //   attributes: ['category_name']
-      // },
       {
         model: Product,
         attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       },
-
     ]
   })
 
@@ -43,14 +38,12 @@ router.get('/:id', (req, res) => {
       'tag_name',
     ],
     include: [
-
       {
         model: Product,
         attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       },
 
     ]
-
   })
     .then(dbTagData => {
       if (!dbTagData) {
