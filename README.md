@@ -38,7 +38,7 @@ YouTube walkthrough video
 
 
 ## **Screenshot**
-![screenshot](screenshot.png)
+![screenshot](screenshot.PNG)
 
 
 
